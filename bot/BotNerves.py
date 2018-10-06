@@ -3,13 +3,14 @@ from helper import *
 class BotNerves:
     def __init__(self):
         self.next_upgrade = None;
+        self.closest_mine = None;
 
-    def mine(self, my_pos, mine_pos):
-        return create_collect_action(mine_pos - my_pos)
+    def mine(self, PlayerInfo):
+        return create_collect_action(closest_mine - PlayerInfo.Position)
 
     def go_mine(self, gameMap, PlayerInfo):
-        goal = self._select_mine(gameMap, PlayerInfo)
-        return self._move_to(PlayerInfo.Position, goal)
+        self._select_mine(gameMap, PlayerInfo)
+        return self._move_to(PlayerInfo.Position, self.closest_mine)
 
     def go_home(self, PlayerInfo):
         return self._move_to(PlayerInfo.Position, PlayerInfo.HouseLocation)
@@ -19,7 +20,6 @@ class BotNerves:
         return PlayerInfo.TotalRessources > self._next_upgrade_cost(PlayerInfo)
 
     def purchase_upgrade(self, PlayerInfo):
-        self._select_next_upgrade(PlayerInfo)
         return create_upgrade_action(self.next_upgrade)
 
     def _next_upgrade_cost(self, PlayerInfo):
@@ -39,7 +39,7 @@ class BotNerves:
 
         resources.sort(key=lambda x: Point.Distance(myPos, x))
 
-        return resources[0]
+        self.closest_mine =  resources[0]
 
     def _move_to(self, myPos, goal):
         if myPos.y != goal.y:
