@@ -61,6 +61,9 @@ class BotBrain:
                 BotBrain.CurrentState = State.HOME
 
         elif BotBrain.CurrentState == State.GETF:  #################################################
+            if BotNerves.closest_enemy is None:
+                BotBrain.CurrentState = State.GETH
+
             if BotNerves.nextToEnemy(gameMap, PlayerInfo):
                 BotBrain.CurrentState = State.FIGH
 
