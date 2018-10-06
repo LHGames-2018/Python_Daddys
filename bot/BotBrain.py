@@ -10,6 +10,8 @@ class State(Enum):
     GETH = 3
     HOME = 4
     UPGR = 5
+    GETF = 6
+    FIGH = 7
 
 
 class BotBrain:
@@ -20,6 +22,8 @@ class BotBrain:
 
     @staticmethod
     def nextPhase(PlayerInfo, gameMap):
+        if BotNerves.nextToEnemy(gameMap, PlayerInfo) and BotBrain.CurrentState != State.FIGH:
+            BotBrain.CurrentState = State.GETF
 
         if BotBrain.CurrentState == State.BASE:  ####################################################
             if PlayerInfo.CarriedResources == PlayerInfo.CarryingCapacity:
@@ -28,10 +32,10 @@ class BotBrain:
             else:
                 BotBrain.CurrentState = State.GETM
 
-        elif BotBrain.CurrentState == State.HOME:  ##################################################
+        elif BotBrain.CurrentState == State.HOME:  ################################################
             BotBrain.CurrentState = State.GETM
 
-        elif BotBrain.CurrentState == State.GETM:  ##################################################
+        elif BotBrain.CurrentState == State.GETM:  ################################################
             if PlayerInfo.Position in BotNerves.nextToMineral(gameMap, PlayerInfo):
                 BotBrain.CurrentState = State.MINE
 
@@ -53,6 +57,18 @@ class BotBrain:
             else:
                 BotBrain.CurrentState = State.HOME
 
+        elif BotBrain.CurrentState == State.GETF:  #################################################
+            if BotNerves.nextToEnemy(gameMap, PlayerInfo):
+                BotBrain.CurrentState = State.FIGH
+
+        elif BotBrain.CurrentState == State.FIGH:  #################################################
+            if BotNerves.nextToEnemy(gameMap, PlayerInfo):
+                BotBrain.CurrentState = State.FIGH
+
+            else:
+                BotBrain.CurrentState = State.GETH
+
+
     @staticmethod
     def DoSomeThing(PlayerInfo, gameMap):
 
@@ -70,3 +86,9 @@ class BotBrain:
 
         elif BotBrain.CurrentState == State.UPGR:
             return BotNerves.purchase_upgrade(PlayerInfo)
+
+        elif BotBrain.CurrentState == State.GETF:
+            return BotNerves.go_enemy(gameMap, PlayerInfo)
+
+        elif BotBrain.CurrentState == State.FIGH:
+            return BotNerves.attack(PlayerInfo)
