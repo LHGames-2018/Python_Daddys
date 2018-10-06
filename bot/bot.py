@@ -22,7 +22,6 @@ class Bot:
         """
         self.brain.nextPhase(self.PlayerInfo, gameMap)
         print(self.brain.CurrentState)
-
         return self.brain.DoSomeThing(self.PlayerInfo, gameMap)
 
 
