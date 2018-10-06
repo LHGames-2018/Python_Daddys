@@ -1,15 +1,6 @@
 from enum import Enum
 from helper.structs import Point
-
-class TileCont(Enum):
-    Empty = 0
-    Wall = 1
-    House = 2
-    Lava = 3
-    Resource = 4
-    Shop = 5
-    Player = 6
-
+from helper.tile import TileContent
 
 class Node:
     def __init__(self, parent=None, position=None, tileType=None):
@@ -54,7 +45,8 @@ def astar(map, start, goal):
             while current is not None:
                 path.append(current.position)
                 current = current.parent
-            print(path[::-1])
+            for pos in path[::-1]:
+                print(pos)
             return path[::-1]  # Return reversed path
 
         children = []
@@ -63,8 +55,12 @@ def astar(map, start, goal):
             nodePosition = Point(currentNode.position.x + newPosition[0], currentNode.position.y + newPosition[1])
 
             # Si c'est une tuile marchable (lave et ressources, peut-être les maisons des autres joueurs?)
-            current_tile_type = map.getTileAt(Point(nodePosition.x, nodePosition.y))
-            if  current_tile_type == TileCont.Lava or current_tile_type == TileCont.Resource:
+
+            currentContent = map.getTileAt(Point(nodePosition.x, nodePosition.y))
+            if currentContent == TileContent.Lava:
+                continue
+            # ne prends pas en compte les tuiles de ressources sauf si c'est le but
+            if currentContent == TileContent.Resource and nodePosition != goal:
                 continue
 
             # Check if node is already in list
@@ -90,7 +86,7 @@ def astar(map, start, goal):
             child.f = child.g + child.h
 
             # Ajout du poids des objets brisables
-            if map.getTileAt(Point(child.position.x, child.position.y)) == TileCont.Wall:
+            if map.getTileAt(Point(child.position.x, child.position.y)) == TileContent.Wall:
                 child.f += 5
 
             # Child is already in the open list
