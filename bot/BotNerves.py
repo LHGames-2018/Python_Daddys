@@ -45,6 +45,9 @@ class BotNerves:
     @staticmethod
     def nextToEnemy(gameMap, PlayerInfo):
         BotNerves._update_closest_enemy(gameMap, PlayerInfo)
+        if BotNerves.closest_enemy is None:
+            return False
+
         point = [Point(0,1), Point(0.-1), Point(1,0), Point(-1,0)]
         return PlayerInfo.Position in [x + BotNerves.closest_enemy for x in point]
 
@@ -55,6 +58,9 @@ class BotNerves:
     @staticmethod
     def is_near_enemy(gameMap, PlayerInfo):
         BotNerves._update_closest_enemy(gameMap, PlayerInfo)
+        if BotNerves.closest_enemy is None:
+            return False
+
         return PlayerInfo.Position.Distance(BotNerves.closest_enemy) < DANGER_ZONE
 
     @staticmethod
@@ -77,7 +83,7 @@ class BotNerves:
 
         enemies.sort(key=lambda x: Point.Distance(myPos, x))
 
-        BotNerves.closest_enemy = enemies[0]
+        BotNerves.closest_enemy = enemies[0] if len(enemies) > 0 else None
 
     @staticmethod
     def _select_mine(gameMap, PlayerInfo):
