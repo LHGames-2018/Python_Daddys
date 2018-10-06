@@ -47,8 +47,11 @@ class BotBrain:
                 BotBrain.CurrentState = State.GETM
 
         elif BotBrain.CurrentState == State.GETH:  #################################################
-            if PlayerInfo.Position == PlayerInfo.HouseLocation:
+            if PlayerInfo.Position == PlayerInfo.HouseLocation and BotNerves.check_if_can_upgrade(PlayerInfo):
                 BotBrain.CurrentState = State.UPGR
+                
+            else:
+                BotBrain.CurrentState = State.HOME
 
         elif BotBrain.CurrentState == State.UPGR:  #################################################
             if BotNerves.check_if_can_upgrade(PlayerInfo):
