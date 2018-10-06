@@ -22,6 +22,11 @@ class BotNerves:
         return BotNerves._move_to(PlayerInfo.Position, PlayerInfo.HouseLocation, gameMap)
 
     @staticmethod
+    def go_enemy(gameMap, PlayerInfo):
+        BotNerves._update_closest_enemy(gameMap, PlayerInfo)
+        return BotNerves._move_to(PlayerInfo.Position, BotNerves.closest_enemy, gameMap)
+
+    @staticmethod
     def check_if_can_upgrade(PlayerInfo):
         BotNerves._select_next_upgrade(PlayerInfo)
         return PlayerInfo.TotalResources > BotNerves._next_upgrade_cost(PlayerInfo)
