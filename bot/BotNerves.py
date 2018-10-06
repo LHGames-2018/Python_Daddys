@@ -1,9 +1,12 @@
 from helper import *
 
+DANGER_ZONE = 3
+
 class BotNerves:
 
     next_upgrade = None
     closest_mine = None
+    closest_enemy = None
 
     @staticmethod
     def mine(PlayerInfo):
@@ -34,12 +37,40 @@ class BotNerves:
         return [x + BotNerves.closest_mine for x in point]
 
     @staticmethod
+    def nextToEnemy(gameMap, PlayerInfo):
+        BotNerves._update_closest_enemy(gameMap, PlayerInfo)
+        point = [Point(0,1), Point(0.-1), Point(1,0), Point(-1,0)]
+        return [x + BotNerves.closest_enemy for x in point]
+
+    @staticmethod
+    def attack(PlayerInfo):
+        return create_attack_action(BotNerves_get_direction(PlayerInfo.Position, BotNerves.closest_enemy))
+
+    @staticmethod
+    def is_near_enemy(PlayerInfo):
+        return PlayerInfo.Position.Distance(BotNerves.closest_enemy) < DANGER_ZONE
+
+    @staticmethod
     def _next_upgrade_cost(PlayerInfo):
         return 10000
 
     @staticmethod
     def _select_next_upgrade(PlayerInfo):
         BotNerves.next_upgrade = UpgradeType.CollectingSpeed
+
+    @staticmethod
+    def _update_closest_enemy(gameMap, PlayerInfo):
+        enemies = []
+        myPos = PlayerInfo.Position
+
+        for tile_array in gameMap.tiles:
+            for tile in tile_array:
+                if tile.TileContent == TileContent.Player and tile.Position != myPos:
+                    resources.append(tile.Position)
+
+        enemiess.sort(key=lambda x: Point.Distance(myPos, x))
+
+        BotNerves.closest_enemy = enemies[0]
 
     @staticmethod
     def _select_mine(gameMap, PlayerInfo):
