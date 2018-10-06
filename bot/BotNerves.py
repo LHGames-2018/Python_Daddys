@@ -95,7 +95,11 @@ class BotNerves:
 
         myPos = PlayerInfo.Position
 
-        resources.sort(key=lambda x: Point.Distance(myPos, x))
+        def get_score(x):
+            _, score = astar(gameMap,myPos, x)
+            return score
+
+        resources.sort(key=get_score)
 
         BotNerves.closest_mine =  resources[0]
 
@@ -112,7 +116,7 @@ class BotNerves:
 
     @staticmethod
     def _get_direction(myPos, goal, gameMap):
-        chemin = astar(gameMap,myPos, goal)
+        chemin, score = astar(gameMap,myPos, goal)
 
         return chemin[1] - chemin[0]
 
