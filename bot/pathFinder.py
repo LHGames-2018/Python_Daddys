@@ -63,7 +63,8 @@ def astar(map, start, goal):
             nodePosition = Point(currentNode.position.x + newPosition[0], currentNode.position.y + newPosition[1])
 
             # Si c'est une tuile marchable (lave et ressources, peut-être les maisons des autres joueurs?)
-            if map.getTileAt(Point(nodePosition.x, nodePosition.y)) == TileCont.Lava:
+            current_tile_type = map.getTileAt(Point(nodePosition.x, nodePosition.y))
+            if  current_tile_type == TileCont.Lava or current_tile_type == TileCont.Resource:
                 continue
 
             # Check if node is already in list
