@@ -71,3 +71,5 @@ class BotNerves:
     def _get_direction(myPos, goal, gameMap):
         chemin = astar(gameMap,myPos, goal)
 
+        return chemin[1] - chemin[0]
+
