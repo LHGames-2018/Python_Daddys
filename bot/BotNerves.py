@@ -78,4 +78,5 @@ class BotNerves:
                 return Point(-1, 0)
             else:
                 return Point(1, 0)
+            #lol
 
