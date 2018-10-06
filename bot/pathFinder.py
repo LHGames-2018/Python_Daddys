@@ -49,7 +49,7 @@ def astar(map, start, goal):
             for pos in path[::-1]:
                 if pos == start or pos == goal:
                     continue
-                print(pos)
+
                 if map.getTileAt(pos) == TileContent.Wall:
                     cost += 5
                 else:
