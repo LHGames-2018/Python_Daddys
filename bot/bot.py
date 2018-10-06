@@ -31,23 +31,23 @@ class Bot:
                     else:
                         return create_move_action(Point(1, 0))
 
-        if self.PlayerInfo.CarriedRessources == self.PlayerInfo.CarryingCapacity:
+        if self.PlayerInfo.CarriedResources == self.PlayerInfo.CarryingCapacity:
             return move_to_goal(self.PlayerInfo.Position, self.PlayerInfo.HouseLocation)
         else:
-            ressources = []
+            resources = []
             for tile_array in gameMap.tiles:
                 for tile in tile_array:
-                    if tile.TileContent == TileContent.Ressource:
-                        ressources.append(tile.position)
+                    if tile.TileContent == TileContent.Resource:
+                        resources.append(tile.Position)
             
             myPos = self.PlayerInfo.Position
 
 
-            ressources.sort(key = lambda x: Point.distance(myPos,x))
+            resources.sort(key = lambda x: Point.Distance(myPos,x))
 
-            goal = ressources[0]
+            goal = resources[0]
 
-            if Point.distance(myPos, goal) == 1:
+            if Point.Distance(myPos, goal) == 1:
                 return create_collect_action(goal - myPos)
             else:    
                 return move_to_goal(myPos, goal)
