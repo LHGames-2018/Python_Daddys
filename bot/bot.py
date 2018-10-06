@@ -14,6 +14,7 @@ class Bot:
         self.PlayerInfo = playerInfo
         self.brain.nextPhase(self.PlayerInfo)
 
+
     def execute_turn(self, gameMap, visiblePlayers):
         """
         This is where you decide what action to take.
@@ -21,7 +22,7 @@ class Bot:
             :param visiblePlayers:  The list of visible players.
         """
 
-        self.brain.DoSomeThing(self.PlayerInfo, gameMap)
+        return self.brain.DoSomeThing(self.PlayerInfo, gameMap)
 
 
     def after_turn(self):

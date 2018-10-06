@@ -1,38 +1,47 @@
 from helper import *
 
 class BotNerves:
-    def __init__(self):
-        self.next_upgrade = None;
-        self.closest_mine = None;
 
-    def mine(self, PlayerInfo):
-        return create_collect_action(closest_mine - PlayerInfo.Position)
+    next_upgrade = None
+    closest_mine = None
 
-    def go_mine(self, gameMap, PlayerInfo):
-        self._select_mine(gameMap, PlayerInfo)
-        return self._move_to(PlayerInfo.Position, self.closest_mine)
+    @staticmethod
+    def mine(PlayerInfo):
+        return create_collect_action(BotNerves.closest_mine - PlayerInfo.Position)
 
-    def go_home(self, PlayerInfo):
-        return self._move_to(PlayerInfo.Position, PlayerInfo.HouseLocation)
+    @staticmethod
+    def go_mine(gameMap, PlayerInfo):
+        BotNerves._select_mine(gameMap, PlayerInfo)
+        return BotNerves._move_to(PlayerInfo.Position, BotNerves.closest_mine)
 
-    def check_if_can_upgrade(self, PlayerInfo):
-        self._select_next_upgrade(PlayerInfo)
-        return PlayerInfo.TotalRessources > self._next_upgrade_cost(PlayerInfo)
+    @staticmethod
+    def go_home(PlayerInfo):
+        return BotNerves._move_to(PlayerInfo.Position, PlayerInfo.HouseLocation)
 
-    def purchase_upgrade(self, PlayerInfo):
-        return create_upgrade_action(self.next_upgrade)
+    @staticmethod
+    def check_if_can_upgrade(PlayerInfo):
+        BotNerves._select_next_upgrade(PlayerInfo)
+        return PlayerInfo.TotalRessources > BotNerves._next_upgrade_cost(PlayerInfo)
 
-    def nextToMineral(self):
+    @staticmethod
+    def purchase_upgrade(PlayerInfo):
+        return create_upgrade_action(BotNerves.next_upgrade)
+
+    @staticmethod
+    def nextToMineral():
         point = [Point(0,1), Point(0.-1), Point(1,0), Point(-1,0)]
-        return [x + self.closest_mine for x in point]
+        return [x + BotNerves.closest_mine for x in point]
 
-    def _next_upgrade_cost(self, PlayerInfo):
+    @staticmethod
+    def _next_upgrade_cost(PlayerInfo):
         return 10000
 
-    def _select_next_upgrade(self, PlayerInfo):
-        self.next_upgrade = UpgradeType.CollectingSpeed
+    @staticmethod
+    def _select_next_upgrade(PlayerInfo):
+        BotNerves.next_upgrade = UpgradeType.CollectingSpeed
 
-    def _select_mine(self, gameMap, PlayerInfo):
+    @staticmethod
+    def _select_mine(gameMap, PlayerInfo):
         resources = []
         for tile_array in gameMap.tiles:
             for tile in tile_array:
@@ -43,9 +52,10 @@ class BotNerves:
 
         resources.sort(key=lambda x: Point.Distance(myPos, x))
 
-        self.closest_mine =  resources[0]
+        BotNerves.closest_mine =  resources[0]
 
-    def _move_to(self, myPos, goal):
+    @staticmethod
+    def _move_to(myPos, goal):
         if myPos.y != goal.y:
             if myPos.y - goal.y > 0:
                 return create_move_action(Point(0, -1))

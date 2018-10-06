@@ -58,16 +58,16 @@ class BotBrain:
     def DoSomeThing(PlayerInfo, gameMap):
 
         if BotBrain.CurrentState == State.HOME:
-            BotBrain.nerve.mine(PlayerInfo)
-
-        elif BotBrain.CurrentState == State.GETM:
-            BotBrain.nerve.go_mine(gameMap, PlayerInfo)
-
-        elif BotBrain.CurrentState == State.MINE:
             pass
 
+        elif BotBrain.CurrentState == State.GETM:
+            return BotBrain.nerve.go_mine(gameMap, PlayerInfo)
+
+        elif BotBrain.CurrentState == State.MINE:
+            return BotBrain.nerve.mine(PlayerInfo)
+
         elif BotBrain.CurrentState == State.GETH:
-            BotBrain.nerve.go_home(PlayerInfo)
+            return BotBrain.nerve.go_home(PlayerInfo)
 
         elif BotBrain.CurrentState == State.UPGR:
-            BotBrain.nerve.purchase_upgrade(PlayerInfo)
+            return BotBrain.nerve.purchase_upgrade(PlayerInfo)
