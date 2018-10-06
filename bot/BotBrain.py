@@ -14,7 +14,6 @@ class State(Enum):
 
 class BotBrain:
     CurrentState = State.BASE
-    nerve = BotNerves()
 
     def __init__(self):
         pass
@@ -33,14 +32,14 @@ class BotBrain:
             BotBrain.CurrentState = State.GETM
 
         elif BotBrain.CurrentState == State.GETM:  ##################################################
-            if PlayerInfo.Position in BotBrain.nerve.nextToMineral():
+            if PlayerInfo.Position in BotNerves.nextToMineral():
                 BotBrain.CurrentState = State.MINE
 
         elif BotBrain.CurrentState == State.MINE:  #################################################
             if PlayerInfo.CarriedResources == PlayerInfo.CarryingCapacity:
                 BotBrain.CurrentState = State.GETH
 
-            if PlayerInfo.Position not in BotBrain.nerve.nextToMineral():
+            if PlayerInfo.Position not in BotNerves.nextToMineral():
                 BotBrain.CurrentState = State.GETM
 
         elif BotBrain.CurrentState == State.GETH:  #################################################
@@ -48,7 +47,7 @@ class BotBrain:
                 BotBrain.CurrentState = State.UPGR
 
         elif BotBrain.CurrentState == State.UPGR:  #################################################
-            if BotBrain.nerve.check_if_can_upgrade(PlayerInfo):
+            if BotNerves.check_if_can_upgrade(PlayerInfo):
                 BotBrain.CurrentState = State.HOME
 
             else:
@@ -61,13 +60,13 @@ class BotBrain:
             pass
 
         elif BotBrain.CurrentState == State.GETM:
-            return BotBrain.nerve.go_mine(gameMap, PlayerInfo)
+            return BotNerves.go_mine(gameMap, PlayerInfo)
 
         elif BotBrain.CurrentState == State.MINE:
-            return BotBrain.nerve.mine(PlayerInfo)
+            return BotNerves.mine(PlayerInfo)
 
         elif BotBrain.CurrentState == State.GETH:
-            return BotBrain.nerve.go_home(PlayerInfo)
+            return BotNerves.go_home(PlayerInfo)
 
         elif BotBrain.CurrentState == State.UPGR:
-            return BotBrain.nerve.purchase_upgrade(PlayerInfo)
+            return BotNerves.purchase_upgrade(PlayerInfo)
