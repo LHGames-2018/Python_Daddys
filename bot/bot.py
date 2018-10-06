@@ -36,7 +36,7 @@ class Bot:
         else:
             ressources = []
             for tile_array in gameMap.tiles:
-                for tile in tiles:
+                for tile in tile_array:
                     if tile.TileContent == TileContent.Ressource:
                         ressources.append(tile.position)
             
