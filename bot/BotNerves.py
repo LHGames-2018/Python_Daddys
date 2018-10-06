@@ -6,6 +6,7 @@ LEVEL_COST = [10000,15000,25000,50000,100000]
 
 class BotNerves:
 
+    upgrade_order = [4, 4, 1, 4, 2, 1, 4]
     next_upgrade = None
     closest_mine = None
     closest_enemy = None
@@ -121,3 +122,6 @@ class BotNerves:
 
         return chemin[1] - chemin[0]
 
+    @staticmethod
+    def determine_next_upgrade(PlayerInfo):
+        return BotNerves.upgrade_order[sum(PlayerInfo)]
