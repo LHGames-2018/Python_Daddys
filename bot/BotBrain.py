@@ -21,7 +21,11 @@ class BotBrain:
     def nextPhase(player):
 
         if BotBrain.CurrentState == State.BASE:  ####################################################
-            BotBrain.CurrentState = State.WALK
+            if player.CarriedResources == player.CarryingCapacity:
+                BotBrain.CurrentState = State.GETH
+
+            else:
+                BotBrain.CurrentState = State.GETM
 
         elif BotBrain.CurrentState == State.HOME:  ##################################################
             BotBrain.CurrentState = State.GETM
@@ -34,6 +38,9 @@ class BotBrain:
             if player.CarriedResources == player.CarryingCapacity:
                 BotBrain.CurrentState = State.GETH
 
+            if player.Position not in nextToMineral():
+                BotBrain.CurrentState = State.GETM
+
         elif BotBrain.CurrentState == State.GETH:  #################################################
             if player.Position == player.HouseLocation:
                 BotBrain.CurrentState = State.UPGR
@@ -45,3 +52,20 @@ class BotBrain:
             else:
                 BotBrain.CurrentState = State.HOME
 
+    @staticmethod
+    def DoSomeThing():
+
+        if BotBrain.CurrentState == State.HOME:
+            pass
+
+        elif BotBrain.CurrentState == State.GETM:
+            pass
+
+        elif BotBrain.CurrentState == State.MINE:
+            pass
+
+        elif BotBrain.CurrentState == State.GETH:
+            pass
+
+        elif BotBrain.CurrentState == State.UPGR:
+            pass
