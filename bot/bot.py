@@ -34,28 +34,28 @@ class Bot:
             if self.playerInfo.TotalRessources >= 10000 :
                 return create_upgrade_action(UpgradeType.CollectingSpeed);
 
-
-        if self.PlayerInfo.CarriedResources == self.PlayerInfo.CarryingCapacity:
-            return move_to_goal(self.PlayerInfo.Position, self.PlayerInfo.HouseLocation)
-        else:
-            resources = []
-            for tile_array in gameMap.tiles:
-                for tile in tile_array:
-                    if tile.TileContent == TileContent.Resource:
-                        resources.append(tile.Position)
-            
-            myPos = self.PlayerInfo.Position
-
-
-            resources.sort(key = lambda x: Point.Distance(myPos,x))
-
-            goal = resources[0]
-
-            if Point.Distance(myPos, goal) == 1:
-                print(self.PlayerInfo.CarriedResources)
-                return create_collect_action(goal - myPos)
-            else:    
-                return move_to_goal(myPos, goal)
+        return create_move_action(Point(1, 0))
+        # if self.PlayerInfo.CarriedResources == self.PlayerInfo.CarryingCapacity:
+        #     return move_to_goal(self.PlayerInfo.Position, self.PlayerInfo.HouseLocation)
+        # else:
+        #     resources = []
+        #     for tile_array in gameMap.tiles:
+        #         for tile in tile_array:
+        #             if tile.TileContent == TileContent.Resource:
+        #                 resources.append(tile.Position)
+        #
+        #     myPos = self.PlayerInfo.Position
+        #
+        #
+        #     resources.sort(key = lambda x: Point.Distance(myPos,x))
+        #
+        #     goal = resources[0]
+        #
+        #     if Point.Distance(myPos, goal) == 1:
+        #         print(self.PlayerInfo.CarriedResources)
+        #         return create_collect_action(goal - myPos)
+        #     else:
+        #         return move_to_goal(myPos, goal)
 
 
 
