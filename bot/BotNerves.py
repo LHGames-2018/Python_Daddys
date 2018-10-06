@@ -1,7 +1,8 @@
 from helper import *
 from .pathFinder import astar
 
-DANGER_ZONE = 2
+DANGER_ZONE = 1
+HOUSE_ZONE = 10
 LEVEL_COST = [10000,15000,25000,50000,100000]
 
 class BotNerves:
@@ -10,10 +11,15 @@ class BotNerves:
     next_upgrade = None
     closest_mine = None
     closest_enemy = None
+    closest_house = None
 
     @staticmethod
     def mine(PlayerInfo):
         return create_collect_action(BotNerves.closest_mine - PlayerInfo.Position)
+
+    @staticmethod
+    def house(PlayerInfo):
+        return create_collect_action(BotNerves.closest_house - PlayerInfo.Position)
 
     @staticmethod
     def go_mine(gameMap, PlayerInfo):
