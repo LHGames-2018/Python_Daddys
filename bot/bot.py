@@ -26,7 +26,7 @@ class Bot:
             :param visiblePlayers:  The list of visible players.
         """
         # self.botMap.addGameMap(gameMap, self.PlayerInfo.HouseLocation)
-        print("Upgrade levels : ", self.PlayerInfo.UpgradeLevels)
+        self.brain.nextPhase(self.PlayerInfo, gameMap)
         print(self.brain.CurrentState)
         print(self.PlayerInfo.UpgradeLevels)
         return self.brain.DoSomeThing(self.PlayerInfo, gameMap)
