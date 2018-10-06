@@ -1,7 +1,7 @@
 from helper import *
 from .pathFinder import astar
 
-DANGER_ZONE = 3
+DANGER_ZONE = 10
 LEVEL_COST = [10000,15000,25000,50000,100000]
 
 class BotNerves:
