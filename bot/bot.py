@@ -20,7 +20,7 @@ class Bot:
         """
 
         def move_to_goal(myPos, goal):
-                if myPos.y != goal.y:
+                if myPos.x == goal.x:
                     if myPos.y - goal.y > 0:
                         return create_move_action(Point(0, -1))
                     else:
@@ -30,6 +30,10 @@ class Bot:
                         return create_move_action(Point(-1, 0))
                     else:
                         return create_move_action(Point(1, 0))
+        if self.PlayerInfo.Position == self.PlayerInfo.HouseLocation:
+            if self.playerInfo.TotalRessources >= 10000 :
+                return create_upgrade_action(UpgradeType.CollectingSpeed);
+
 
         if self.PlayerInfo.CarriedResources == self.PlayerInfo.CarryingCapacity:
             return move_to_goal(self.PlayerInfo.Position, self.PlayerInfo.HouseLocation)
