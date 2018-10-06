@@ -48,7 +48,10 @@ class BotBrain:
 
         elif BotBrain.CurrentState == State.GETH:  #################################################
             if PlayerInfo.Position == PlayerInfo.HouseLocation:
-                BotBrain.CurrentState = State.UPGR
+                if BotNerves.check_if_can_upgrade(PlayerInfo):
+                    BotBrain.CurrentState = State.UPGR
+                else:
+                    BotBrain.CurrentState = State.HOME
 
         elif BotBrain.CurrentState == State.UPGR:  #################################################
             if BotNerves.check_if_can_upgrade(PlayerInfo):
@@ -72,7 +75,7 @@ class BotBrain:
     def DoSomeThing(PlayerInfo, gameMap):
 
         if BotBrain.CurrentState == State.HOME:
-            pass
+            return create_empty_action()
 
         elif BotBrain.CurrentState == State.GETM:
             return BotNerves.go_mine(gameMap, PlayerInfo)
