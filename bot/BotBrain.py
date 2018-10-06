@@ -21,43 +21,51 @@ class BotBrain:
     def nextPhase(player):
 
         if BotBrain.CurrentState == State.BASE:  ####################################################
-            BotBrain.CurrentState = State.WALK
-            return  # get to mine
+            if player.CarriedResources == player.CarryingCapacity:
+                BotBrain.CurrentState = State.GETH
+
+            else:
+                BotBrain.CurrentState = State.GETM
 
         elif BotBrain.CurrentState == State.HOME:  ##################################################
             BotBrain.CurrentState = State.GETM
-            return  # get to mine
 
         elif BotBrain.CurrentState == State.GETM:  ##################################################
             if player.Position in nextToMineral():
                 BotBrain.CurrentState = State.MINE
-                return  # mine
-
-            else:
-                return  # walk to mineral
 
         elif BotBrain.CurrentState == State.MINE:  #################################################
             if player.CarriedResources == player.CarryingCapacity:
                 BotBrain.CurrentState = State.GETH
-                return  # walk to home
 
-            else:
-                return  # mine
+            if player.Position not in nextToMineral():
+                BotBrain.CurrentState = State.GETM
 
         elif BotBrain.CurrentState == State.GETH:  #################################################
             if player.Position == player.HouseLocation:
                 BotBrain.CurrentState = State.UPGR
-                return  # upgrade
-
-            else:
-                return  # walk to home
 
         elif BotBrain.CurrentState == State.UPGR:  #################################################
             if player.TotalResources >= neededRSC():
                 BotBrain.CurrentState = State.HOME
-                return  # buy upgrage
 
             else:
                 BotBrain.CurrentState = State.HOME
-                return  # nothing
 
+    @staticmethod
+    def DoSomeThing():
+
+        if BotBrain.CurrentState == State.HOME:
+            pass
+
+        elif BotBrain.CurrentState == State.GETM:
+            pass
+
+        elif BotBrain.CurrentState == State.MINE:
+            pass
+
+        elif BotBrain.CurrentState == State.GETH:
+            pass
+
+        elif BotBrain.CurrentState == State.UPGR:
+            pass
