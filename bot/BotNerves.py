@@ -112,7 +112,7 @@ class BotNerves:
 
     @staticmethod
     def _get_direction(myPos, goal, gameMap):
-        chemin, score = astar(gameMap,myPos, goal)
+        chemin = astar(gameMap,myPos, goal)
 
         return chemin[1] - chemin[0]
 
