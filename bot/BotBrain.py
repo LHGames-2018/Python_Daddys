@@ -75,7 +75,7 @@ class BotBrain:
     def DoSomeThing(PlayerInfo, gameMap):
 
         if BotBrain.CurrentState == State.HOME:
-            pass
+            return create_empty_action()
 
         elif BotBrain.CurrentState == State.GETM:
             return BotNerves.go_mine(gameMap, PlayerInfo)
