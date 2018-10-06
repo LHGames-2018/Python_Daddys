@@ -28,7 +28,8 @@ class BotNerves:
         return create_upgrade_action(BotNerves.next_upgrade)
 
     @staticmethod
-    def nextToMineral():
+    def nextToMineral(gameMap, PlayerInfo):
+        BotNerves._select_mine(gameMap, PlayerInfo)
         point = [Point(0,1), Point(0.-1), Point(1,0), Point(-1,0)]
         return [x + BotNerves.closest_mine for x in point]
 

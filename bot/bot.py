@@ -12,8 +12,6 @@ class Bot:
             :param playerInfo: Your bot's current state.
         """
         self.PlayerInfo = playerInfo
-        self.brain.nextPhase(self.PlayerInfo)
-        print(self.brain.CurrentState)
 
 
     def execute_turn(self, gameMap, visiblePlayers):
@@ -22,6 +20,8 @@ class Bot:
             :param gameMap: The gamemap.
             :param visiblePlayers:  The list of visible players.
         """
+        self.brain.nextPhase(self.PlayerInfo, gameMap)
+        print(self.brain.CurrentState)
 
         return self.brain.DoSomeThing(self.PlayerInfo, gameMap)
 

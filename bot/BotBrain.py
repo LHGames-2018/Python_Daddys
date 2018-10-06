@@ -19,7 +19,7 @@ class BotBrain:
         pass
 
     @staticmethod
-    def nextPhase(PlayerInfo):
+    def nextPhase(PlayerInfo, gameMap):
 
         if BotBrain.CurrentState == State.BASE:  ####################################################
             if PlayerInfo.CarriedResources == PlayerInfo.CarryingCapacity:
@@ -32,14 +32,14 @@ class BotBrain:
             BotBrain.CurrentState = State.GETM
 
         elif BotBrain.CurrentState == State.GETM:  ##################################################
-            if PlayerInfo.Position in BotNerves.nextToMineral():
+            if PlayerInfo.Position in BotNerves.nextToMineral(gameMap, PlayerInfo):
                 BotBrain.CurrentState = State.MINE
 
         elif BotBrain.CurrentState == State.MINE:  #################################################
             if PlayerInfo.CarriedResources == PlayerInfo.CarryingCapacity:
                 BotBrain.CurrentState = State.GETH
 
-            if PlayerInfo.Position not in BotNerves.nextToMineral():
+            if PlayerInfo.Position not in BotNerves.nextToMineral(gameMap, PlayerInfo):
                 BotBrain.CurrentState = State.GETM
 
         elif BotBrain.CurrentState == State.GETH:  #################################################
