@@ -1,4 +1,5 @@
 from helper.player import *
+from bot.BotNerves import *
 from enum import Enum
 
 class State(Enum):
@@ -13,15 +14,16 @@ class State(Enum):
 
 class BotBrain:
     CurrentState = State.BASE
+    nerve = BotNerves()
 
     def __init__(self):
         pass
 
     @staticmethod
-    def nextPhase(player):
+    def nextPhase(PlayerInfo):
 
         if BotBrain.CurrentState == State.BASE:  ####################################################
-            if player.CarriedResources == player.CarryingCapacity:
+            if PlayerInfo.CarriedResources == PlayerInfo.CarryingCapacity:
                 BotBrain.CurrentState = State.GETH
 
             else:
@@ -31,41 +33,41 @@ class BotBrain:
             BotBrain.CurrentState = State.GETM
 
         elif BotBrain.CurrentState == State.GETM:  ##################################################
-            if player.Position in nextToMineral():
+            if PlayerInfo.Position in nextToMineral():
                 BotBrain.CurrentState = State.MINE
 
         elif BotBrain.CurrentState == State.MINE:  #################################################
-            if player.CarriedResources == player.CarryingCapacity:
+            if PlayerInfo.CarriedResources == PlayerInfo.CarryingCapacity:
                 BotBrain.CurrentState = State.GETH
 
-            if player.Position not in nextToMineral():
+            if PlayerInfo.Position not in nextToMineral():
                 BotBrain.CurrentState = State.GETM
 
         elif BotBrain.CurrentState == State.GETH:  #################################################
-            if player.Position == player.HouseLocation:
+            if PlayerInfo.Position == PlayerInfo.HouseLocation:
                 BotBrain.CurrentState = State.UPGR
 
         elif BotBrain.CurrentState == State.UPGR:  #################################################
-            if player.TotalResources >= neededRSC():
+            if BotBrain.nerve.check_if_can_upgrade(PlayerInfo):
                 BotBrain.CurrentState = State.HOME
 
             else:
                 BotBrain.CurrentState = State.HOME
 
     @staticmethod
-    def DoSomeThing():
+    def DoSomeThing(PlayerInfo, gameMap):
 
         if BotBrain.CurrentState == State.HOME:
-            pass
+            BotBrain.nerve.mine(PlayerInfo)
 
         elif BotBrain.CurrentState == State.GETM:
-            pass
+            BotBrain.nerve.go_mine(gameMap, PlayerInfo)
 
         elif BotBrain.CurrentState == State.MINE:
             pass
 
         elif BotBrain.CurrentState == State.GETH:
-            pass
+            BotBrain.nerve.go_home(PlayerInfo)
 
         elif BotBrain.CurrentState == State.UPGR:
-            pass
+            BotBrain.nerve.purchase_upgrade(PlayerInfo)
