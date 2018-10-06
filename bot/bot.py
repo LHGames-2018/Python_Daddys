@@ -48,6 +48,7 @@ class Bot:
             goal = resources[0]
 
             if Point.Distance(myPos, goal) == 1:
+                print(self.PlayerInfo.CarriedResources)
                 return create_collect_action(goal - myPos)
             else:    
                 return move_to_goal(myPos, goal)
