@@ -66,7 +66,7 @@ class BotBrain:
             return BotNerves.mine(PlayerInfo)
 
         elif BotBrain.CurrentState == State.GETH:
-            return BotNerves.go_home(PlayerInfo)
+            return BotNerves.go_home(PlayerInfo, gameMap)
 
         elif BotBrain.CurrentState == State.UPGR:
             return BotNerves.purchase_upgrade(PlayerInfo)

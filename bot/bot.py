@@ -13,6 +13,7 @@ class Bot:
         """
         self.PlayerInfo = playerInfo
         self.brain.nextPhase(self.PlayerInfo)
+        print(self.brain.CurrentState)
 
 
     def execute_turn(self, gameMap, visiblePlayers):

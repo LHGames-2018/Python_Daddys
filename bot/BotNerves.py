@@ -12,16 +12,16 @@ class BotNerves:
     @staticmethod
     def go_mine(gameMap, PlayerInfo):
         BotNerves._select_mine(gameMap, PlayerInfo)
-        return BotNerves._move_to(PlayerInfo.Position, BotNerves.closest_mine)
+        return BotNerves._move_to(PlayerInfo.Position, BotNerves.closest_mine, gameMap)
 
     @staticmethod
-    def go_home(PlayerInfo):
-        return BotNerves._move_to(PlayerInfo.Position, PlayerInfo.HouseLocation)
+    def go_home(PlayerInfo, gameMap):
+        return BotNerves._move_to(PlayerInfo.Position, PlayerInfo.HouseLocation, gameMap)
 
     @staticmethod
     def check_if_can_upgrade(PlayerInfo):
         BotNerves._select_next_upgrade(PlayerInfo)
-        return PlayerInfo.TotalRessources > BotNerves._next_upgrade_cost(PlayerInfo)
+        return PlayerInfo.TotalResources > BotNerves._next_upgrade_cost(PlayerInfo)
 
     @staticmethod
     def purchase_upgrade(PlayerInfo):
@@ -55,18 +55,26 @@ class BotNerves:
         BotNerves.closest_mine =  resources[0]
 
     @staticmethod
-    def _move_to(myPos, goal):
-        if myPos.y != goal.y:
+    def _move_to(myPos, goal, gameMap):
+        direction = BotNerves._get_direction(myPos, goal)
+        type = gameMap.getTileAt(myPos + direction)
+        if type == TileContent.Wall:
+            return create_attack_action(direction)
+        elif type == TileContent.Resource:
+            return create_collect_action(direction)
+        else:
+            return  create_move_action(direction)
+
+    @staticmethod
+    def _get_direction(myPos, goal):
+        if myPos.x == goal.x:
             if myPos.y - goal.y > 0:
-                return create_move_action(Point(0, -1))
+                return Point(0, -1)
             else:
-                return create_move_action(Point(0, 1))
+                return Point(0, 1)
         else:
             if myPos.x - goal.x > 0:
-                return create_move_action(Point(-1, 0))
+                return Point(-1, 0)
             else:
-                return create_move_action(Point(1, 0))
-
-    
-
+                return Point(1, 0)
 
