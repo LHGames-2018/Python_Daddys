@@ -24,6 +24,7 @@ class Bot:
         """
         self.brain.nextPhase(self.PlayerInfo, gameMap)
         print(self.brain.CurrentState)
+        print(astar(gameMap, self.PlayerInfo.Position, Point(self.PlayerInfo.Position.x + 10, self.PlayerInfo.Position.y + 10)))
         return self.brain.DoSomeThing(self.PlayerInfo, gameMap)
 
 

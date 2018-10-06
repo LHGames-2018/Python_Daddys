@@ -1,18 +1,9 @@
-from enum import Enum
 from helper.structs import Point
-
-class TileCont(Enum):
-    Empty = 0
-    Wall = 1
-    House = 2
-    Lava = 3
-    Resource = 4
-    Shop = 5
-    Player = 6
+from helper.tile import TileContent
 
 
 class Node:
-    def __init__(self, parent=None, position=None, tileType=None):
+    def __init__(self, parent=None, position=None):
         self.parent = parent
         self.position = position
 
@@ -49,13 +40,20 @@ def astar(map, start, goal):
         closedList.append(currentNode)
 
         if currentNode == goalNode:
+            cost = 0
             path = []
             current = currentNode
             while current is not None:
                 path.append(current.position)
                 current = current.parent
-            print(path[::-1])
-            return path[::-1]  # Return reversed path
+            for pos in path:
+                if pos == start:
+                    continue
+                if map.getTileAt(pos) == TileContent.Wall:
+                    cost += 5
+                else:
+                    cost += 1
+            return path[::-1], cost  # Return reversed path
 
         children = []
         for newPosition in [(0, -1), (0, 1), (-1, 0), (1, 0)]:  # Carrés adajacents
@@ -63,7 +61,7 @@ def astar(map, start, goal):
             nodePosition = Point(currentNode.position.x + newPosition[0], currentNode.position.y + newPosition[1])
 
             # Si c'est une tuile marchable (lave et ressources, peut-être les maisons des autres joueurs?)
-            if map.getTileAt(Point(nodePosition.x, nodePosition.y)) == TileCont.Lava:
+            if map.getTileAt(Point(nodePosition.x, nodePosition.y)) == TileContent.Lava or map.getTileAt(Point(nodePosition.x, nodePosition.y)) == TileContent.Resource:
                 continue
 
             # Check if node is already in list
@@ -89,7 +87,7 @@ def astar(map, start, goal):
             child.f = child.g + child.h
 
             # Ajout du poids des objets brisables
-            if map.getTileAt(Point(child.position.x, child.position.y)) == TileCont.Wall:
+            if map.getTileAt(Point(child.position.x, child.position.y)) == TileContent.Wall:
                 child.f += 5
 
             # Child is already in the open list
