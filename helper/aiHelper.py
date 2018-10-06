@@ -54,7 +54,20 @@ def create_purchase_action(item):
     item, except for health potions.
         :param item: The type of item to purchase.
     """
-    return _create_action("PurchaseAction", item)
+    action_content = ActionContent("PurchaseAction", item)
+    return json.dumps(action_content.__dict__)
+
+
+def create_upgrade_action(item):
+    """
+    Creates a purchase action for the specified item. You need to be ON
+    a shop tile for this action to succeed. If you are on any other
+    type of tile, the action will fail. You can only carry 1 of each
+    item, except for health potions.
+        :param item: The type of item to purchase.
+    """
+    action_content = ActionContent("UpgradeAction", item)
+    return json.dumps(action_content.__dict__)
 
 
 def create_empty_action():
