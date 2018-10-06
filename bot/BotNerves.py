@@ -1,7 +1,8 @@
 from helper import *
 from .pathFinder import astar
 
-DANGER_ZONE = 3
+DANGER_ZONE = 10
+LEVEL_COST = [10000,15000,25000,50000,100000]
 
 class BotNerves:
 
@@ -65,7 +66,7 @@ class BotNerves:
 
     @staticmethod
     def _next_upgrade_cost(PlayerInfo):
-        return 10000
+        return LEVEL_COST[PlayerInfo.getUpgradeLevel(BotNerves.next_upgrade)]
 
     @staticmethod
     def _select_next_upgrade(PlayerInfo):
