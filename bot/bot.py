@@ -1,5 +1,7 @@
 from helper import *
 from bot.BotBrain import *
+import math
+from .pathFinder import astar
 
 
 class Bot:
@@ -22,7 +24,6 @@ class Bot:
         """
         self.brain.nextPhase(self.PlayerInfo, gameMap)
         print(self.brain.CurrentState)
-
         return self.brain.DoSomeThing(self.PlayerInfo, gameMap)
 
 

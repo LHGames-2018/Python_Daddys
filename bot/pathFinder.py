@@ -1,4 +1,5 @@
 from enum import Enum
+from helper.structs import Point
 
 class TileCont(Enum):
     Empty = 0
@@ -44,7 +45,6 @@ def astar(map, start, goal):
                 currentNode = item
                 currentIndex = index
 
-
         openList.pop(currentIndex)
         closedList.append(currentNode)
 
@@ -54,15 +54,16 @@ def astar(map, start, goal):
             while current is not None:
                 path.append(current.position)
                 current = current.parent
+            print(path[::-1])
             return path[::-1]  # Return reversed path
 
         children = []
         for newPosition in [(0, -1), (0, 1), (-1, 0), (1, 0)]:  # Carrés adajacents
             # Get node position
-            nodePosition = (currentNode.position[0] + newPosition[0], currentNode.position[1] + newPosition[1])
+            nodePosition = Point(currentNode.position.x + newPosition[0], currentNode.position.y + newPosition[1])
 
             # Si c'est une tuile marchable (lave et ressources, peut-être les maisons des autres joueurs?)
-            if map[nodePosition[0]][nodePosition[1]].TileContent == TileCont.Lava or map[nodePosition[0]][nodePosition[1]].TileContent == TileCont.Resource:
+            if map.getTileAt(Point(nodePosition.x, nodePosition.y)) == TileCont.Lava:
                 continue
 
             # Check if node is already in list
@@ -84,11 +85,11 @@ def astar(map, start, goal):
 
             # Create the f, g, and h values
             child.g = currentNode.g + 1
-            child.h = ((child.position[0] - goalNode.position[0]) ** 2) + ((child.position[1] - goalNode.position[1]) ** 2)
+            child.h = ((child.position.x - goalNode.position.x) ** 2) + ((child.position.y - goalNode.position.y) ** 2)
             child.f = child.g + child.h
 
             # Ajout du poids des objets brisables
-            if map[(child.position[0], [child.position[1]].TileContent == TileCont.Wall:
+            if map.getTileAt(Point(child.position.x, child.position.y)) == TileCont.Wall:
                 child.f += 5
 
             # Child is already in the open list
