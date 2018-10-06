@@ -23,12 +23,12 @@ class Bot:
                 if myPos.x == goal.x:
                     if myPos.y - goal.y > 0:
                         return create_move_action(Point(0, -1))
-                    else
+                    else:
                         return create_move_action(Point(0, 1))
                 else:
                     if myPos.x - goal.x > 0:
                         return create_move_action(Point(-1, 0))
-                    else
+                    else:
                         return create_move_action(Point(1, 0))
 
         if self.PlayerInfo.CarriedRessources == self.PlayerInfo.CarryingCapacity:
