@@ -47,7 +47,8 @@ class BotNerves:
         return create_attack_action(BotNerves_get_direction(PlayerInfo.Position, BotNerves.closest_enemy))
 
     @staticmethod
-    def is_near_enemy(PlayerInfo):
+    def is_near_enemy(gameMap, PlayerInfo):
+        BotNerves._update_closest_enemy(gameMap, PlayerInfo)
         return PlayerInfo.Position.Distance(BotNerves.closest_enemy) < DANGER_ZONE
 
     @staticmethod
