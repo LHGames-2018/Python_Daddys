@@ -28,6 +28,7 @@ class Bot:
         # self.botMap.addGameMap(gameMap, self.PlayerInfo.HouseLocation)
         self.brain.nextPhase(self.PlayerInfo, gameMap)
         print(self.brain.CurrentState)
+        print(self.PlayerInfo.UpgradeLevels)
         return self.brain.DoSomeThing(self.PlayerInfo, gameMap)
         
     def after_turn(self):

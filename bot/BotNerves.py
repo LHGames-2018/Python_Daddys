@@ -1,7 +1,7 @@
 from helper import *
 from .pathFinder import astar
 
-DANGER_ZONE = 10
+DANGER_ZONE = 4
 LEVEL_COST = [10000,15000,25000,50000,100000]
 
 class BotNerves:
@@ -62,7 +62,7 @@ class BotNerves:
         if BotNerves.closest_enemy is None:
             return False
 
-        return PlayerInfo.Position.Distance(BotNerves.closest_enemy) < DANGER_ZONE
+        return Point.Distance(PlayerInfo.Position, BotNerves.closest_enemy) < DANGER_ZONE
 
     @staticmethod
     def _next_upgrade_cost(PlayerInfo):
