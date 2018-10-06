@@ -64,7 +64,6 @@ class BotBrain:
         elif BotBrain.CurrentState == State.FIGH:  #################################################
             if BotNerves.nextToEnemy(gameMap, PlayerInfo):
                 BotBrain.CurrentState = State.FIGH
-
             else:
                 BotBrain.CurrentState = State.GETH
 
@@ -91,4 +90,4 @@ class BotBrain:
             return BotNerves.go_enemy(gameMap, PlayerInfo)
 
         elif BotBrain.CurrentState == State.FIGH:
-            return BotNerves.attack(PlayerInfo)
+            return BotNerves.attack(PlayerInfo, gameMap)

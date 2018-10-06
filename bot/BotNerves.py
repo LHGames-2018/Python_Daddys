@@ -46,11 +46,11 @@ class BotNerves:
     def nextToEnemy(gameMap, PlayerInfo):
         BotNerves._update_closest_enemy(gameMap, PlayerInfo)
         point = [Point(0,1), Point(0.-1), Point(1,0), Point(-1,0)]
-        return [x + BotNerves.closest_enemy for x in point]
+        return PlayerInfo.Position in [x + BotNerves.closest_enemy for x in point]
 
     @staticmethod
-    def attack(PlayerInfo):
-        return create_attack_action(BotNerves_get_direction(PlayerInfo.Position, BotNerves.closest_enemy))
+    def attack(PlayerInfo, gameMap):
+        return create_attack_action(BotNerves._get_direction(PlayerInfo.Position, BotNerves.closest_enemy, gameMap))
 
     @staticmethod
     def is_near_enemy(gameMap, PlayerInfo):
@@ -73,9 +73,9 @@ class BotNerves:
         for tile_array in gameMap.tiles:
             for tile in tile_array:
                 if tile.TileContent == TileContent.Player and tile.Position != myPos:
-                    resources.append(tile.Position)
+                    enemies.append(tile.Position)
 
-        enemiess.sort(key=lambda x: Point.Distance(myPos, x))
+        enemies.sort(key=lambda x: Point.Distance(myPos, x))
 
         BotNerves.closest_enemy = enemies[0]
 
@@ -106,7 +106,7 @@ class BotNerves:
 
     @staticmethod
     def _get_direction(myPos, goal, gameMap):
-        chemin = astar(gameMap,myPos, goal)
+        chemin, score = astar(gameMap,myPos, goal)
 
         return chemin[1] - chemin[0]
 

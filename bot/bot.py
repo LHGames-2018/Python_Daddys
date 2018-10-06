@@ -8,7 +8,7 @@ from . BotMap import BotMap
 class Bot:
     def __init__(self):
         self.brain = BotBrain
-        self.botMap = BotMap()
+        # self.botMap = BotMap()
         self.PlayerInfo = None
 
     def before_turn(self, playerInfo):
@@ -16,7 +16,7 @@ class Bot:
         Gets called before ExecuteTurn. This is where you get your bot's state.
             :param playerInfo: Your bot's current state.
         """
-        self.botMap.loadMap()
+        # self.botMap.loadMap()
         self.PlayerInfo = playerInfo
 
     def execute_turn(self, gameMap, visiblePlayers):
@@ -25,10 +25,10 @@ class Bot:
             :param gameMap: The gamemap.
             :param visiblePlayers:  The list of visible players.
         """
-        self.botMap.addGameMap(gameMap, self.PlayerInfo.HouseLocation)
+        # self.botMap.addGameMap(gameMap, self.PlayerInfo.HouseLocation)
         self.brain.nextPhase(self.PlayerInfo, gameMap)
         print(self.brain.CurrentState)
-        print(astar(gameMap, self.PlayerInfo.Position, Point(self.PlayerInfo.Position.x + 10, self.PlayerInfo.Position.y + 10)))
+
         return self.brain.DoSomeThing(self.PlayerInfo, gameMap)
         
     def after_turn(self):
