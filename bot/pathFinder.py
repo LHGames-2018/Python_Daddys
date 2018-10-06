@@ -69,7 +69,8 @@ def astar(map, start, goal):
             # ne prends pas en compte les tuiles de ressources sauf si c'est le but
             if currentContent == TileContent.Resource and nodePosition != goal:
                 continue
-
+            if currentContent == TileContent.House and nodePosition != goal:
+                continue
             # Check if node is already in list
             if Node(currentNode, nodePosition) in closedList:
                 continue
