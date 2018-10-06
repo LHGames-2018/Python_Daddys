@@ -1,7 +1,5 @@
 from helper import *
 from bot.BotBrain import *
-import math
-from .pathFinder import astar
 
 
 class Bot:

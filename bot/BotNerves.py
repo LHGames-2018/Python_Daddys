@@ -1,4 +1,5 @@
 from helper import *
+from .pathFinder import astar
 
 class BotNerves:
 
@@ -57,7 +58,7 @@ class BotNerves:
 
     @staticmethod
     def _move_to(myPos, goal, gameMap):
-        direction = BotNerves._get_direction(myPos, goal)
+        direction = BotNerves._get_direction(myPos, goal, gameMap)
         type = gameMap.getTileAt(myPos + direction)
         if type == TileContent.Wall:
             return create_attack_action(direction)
@@ -67,16 +68,6 @@ class BotNerves:
             return  create_move_action(direction)
 
     @staticmethod
-    def _get_direction(myPos, goal):
-        if myPos.x == goal.x:
-            if myPos.y - goal.y > 0:
-                return Point(0, -1)
-            else:
-                return Point(0, 1)
-        else:
-            if myPos.x - goal.x > 0:
-                return Point(-1, 0)
-            else:
-                return Point(1, 0)
-            #lol
+    def _get_direction(myPos, goal, gameMap):
+        chemin = astar(gameMap,myPos, goal)
 
