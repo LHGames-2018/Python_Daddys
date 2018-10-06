@@ -45,9 +45,16 @@ def astar(map, start, goal):
             while current is not None:
                 path.append(current.position)
                 current = current.parent
+            cost = 0
             for pos in path[::-1]:
-                print(pos)
-            return path[::-1]  # Return reversed path
+                if pos == start or pos == goal:
+                    continue
+
+                if map.getTileAt(pos) == TileContent.Wall:
+                    cost += 5
+                else:
+                    cost += 1
+            return path[::-1], cost  # Return reversed path
 
         children = []
         for newPosition in [(0, -1), (0, 1), (-1, 0), (1, 0)]:  # Carrés adajacents

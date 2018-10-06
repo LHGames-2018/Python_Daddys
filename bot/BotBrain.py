@@ -22,7 +22,7 @@ class BotBrain:
 
     @staticmethod
     def nextPhase(PlayerInfo, gameMap):
-        if BotNerves.nextToEnemy(gameMap, PlayerInfo) and BotBrain.CurrentState != State.FIGH:
+        if BotNerves.is_near_enemy(gameMap, PlayerInfo) and BotBrain.CurrentState != State.FIGH:
             BotBrain.CurrentState = State.GETF
 
         if BotBrain.CurrentState == State.BASE:  ####################################################
