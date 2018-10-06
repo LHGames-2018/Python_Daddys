@@ -33,14 +33,14 @@ class BotBrain:
             BotBrain.CurrentState = State.GETM
 
         elif BotBrain.CurrentState == State.GETM:  ##################################################
-            if PlayerInfo.Position in nextToMineral():
+            if PlayerInfo.Position in BotBrain.nerve.nextToMineral():
                 BotBrain.CurrentState = State.MINE
 
         elif BotBrain.CurrentState == State.MINE:  #################################################
             if PlayerInfo.CarriedResources == PlayerInfo.CarryingCapacity:
                 BotBrain.CurrentState = State.GETH
 
-            if PlayerInfo.Position not in nextToMineral():
+            if PlayerInfo.Position not in BotBrain.nerve.nextToMineral():
                 BotBrain.CurrentState = State.GETM
 
         elif BotBrain.CurrentState == State.GETH:  #################################################

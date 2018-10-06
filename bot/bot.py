@@ -1,9 +1,10 @@
 from helper import *
-import math
+from bot.BotBrain import *
+
 
 class Bot:
     def __init__(self):
-        pass
+        self.brain = BotBrain
 
     def before_turn(self, playerInfo):
         """
@@ -11,6 +12,7 @@ class Bot:
             :param playerInfo: Your bot's current state.
         """
         self.PlayerInfo = playerInfo
+        self.brain.nextPhase(self.PlayerInfo)
 
     def execute_turn(self, gameMap, visiblePlayers):
         """
@@ -19,44 +21,8 @@ class Bot:
             :param visiblePlayers:  The list of visible players.
         """
 
-        def move_to_goal(myPos, goal):
-                if myPos.y != goal.y:
-                    if myPos.y - goal.y > 0:
-                        return create_move_action(Point(0, -1))
-                    else:
-                        return create_move_action(Point(0, 1))
-                else:
-                    if myPos.x - goal.x > 0:
-                        return create_move_action(Point(-1, 0))
-                    else:
-                        return create_move_action(Point(1, 0))
+        self.brain.DoSomeThing(self.PlayerInfo, gameMap)
 
-        if self.PlayerInfo.CarriedResources == self.PlayerInfo.CarryingCapacity:
-            return move_to_goal(self.PlayerInfo.Position, self.PlayerInfo.HouseLocation)
-        else:
-            resources = []
-            for tile_array in gameMap.tiles:
-                for tile in tile_array:
-                    if tile.TileContent == TileContent.Resource:
-                        resources.append(tile.Position)
-            
-            myPos = self.PlayerInfo.Position
-
-
-            resources.sort(key = lambda x: Point.Distance(myPos,x))
-
-            goal = resources[0]
-
-            if Point.Distance(myPos, goal) == 1:
-                print(self.PlayerInfo.CarriedResources)
-                return create_collect_action(goal - myPos)
-            else:    
-                return move_to_goal(myPos, goal)
-
-
-
-        # Write your bot here. Use functions from aiHelper to instantiate your actions.
-        return create_move_action(Point(0, 1))
 
     def after_turn(self):
         """

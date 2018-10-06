@@ -22,6 +22,10 @@ class BotNerves:
     def purchase_upgrade(self, PlayerInfo):
         return create_upgrade_action(self.next_upgrade)
 
+    def nextToMineral(self):
+        point = [Point(0,1), Point(0.-1), Point(1,0), Point(-1,0)]
+        return [x + self.closest_mine for x in point]
+
     def _next_upgrade_cost(self, PlayerInfo):
         return 10000
 
@@ -52,3 +56,7 @@ class BotNerves:
                 return create_move_action(Point(-1, 0))
             else:
                 return create_move_action(Point(1, 0))
+
+    
+
+
