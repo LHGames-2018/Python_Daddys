@@ -20,7 +20,7 @@ class Bot:
         """
 
         def move_to_goal(myPos, goal):
-                if myPos.x == goal.x:
+                if myPos.y != goal.y:
                     if myPos.y - goal.y > 0:
                         return create_move_action(Point(0, -1))
                     else:
