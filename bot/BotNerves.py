@@ -1,7 +1,7 @@
 from helper import *
 from .pathFinder import astar
 
-DANGER_ZONE = 4
+DANGER_ZONE = 8
 LEVEL_COST = [10000,15000,25000,50000,100000]
 
 class BotNerves:
@@ -23,6 +23,10 @@ class BotNerves:
     @staticmethod
     def go_home(PlayerInfo, gameMap):
         return BotNerves._move_to(PlayerInfo.Position, PlayerInfo.HouseLocation, gameMap)
+
+    @staticmethod
+    def go_mrdr(PlayerInfo, gameMap):
+        return BotNerves._move_to(PlayerInfo.Position, PlayerInfo.Position + Point(0,4), gameMap)
 
     @staticmethod
     def go_enemy(gameMap, PlayerInfo):

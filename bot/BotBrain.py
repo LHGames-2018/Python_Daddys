@@ -12,6 +12,7 @@ class State(Enum):
     UPGR = 5
     GETF = 6
     FIGH = 7
+    MRDR = 8
 
 
 class BotBrain:
@@ -31,6 +32,8 @@ class BotBrain:
 
             else:
                 BotBrain.CurrentState = State.GETM
+
+            BotBrain.CurrentState = State.MRDR
 
         elif BotBrain.CurrentState == State.HOME:  ################################################
             BotBrain.CurrentState = State.GETM
@@ -98,3 +101,6 @@ class BotBrain:
 
         elif BotBrain.CurrentState == State.FIGH:
             return BotNerves.attack(PlayerInfo, gameMap)
+
+        elif BotBrain.CurrentState == State.MRDR:
+            return BotNerves.go_mrdr(PlayerInfo, gameMap)
