@@ -29,7 +29,7 @@ class Bot:
         self.brain.nextPhase(self.PlayerInfo, gameMap)
         print(self.brain.CurrentState)
         print(self.PlayerInfo.UpgradeLevels)
-        print("BAG : " + self.PlayerInfo.CarriedItems)
+        print("BAG : ", self.PlayerInfo.CarriedItems)
         return self.brain.DoSomeThing(self.PlayerInfo, gameMap)
         
     def after_turn(self):
